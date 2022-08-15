@@ -36,6 +36,9 @@ st.markdown('#')
 path = os.getcwd()
 
 ########################### Lendo a primeira tabela ###########################
+'''
+Lendo a primeira tabela, organizando e transformando para certos padrões utilizados no Brasil. Facilitando a visualização para algo mais cômodo.
+'''
 tabela1 = pd.read_excel(path+r"\\PS - Base de dados 1 (correta).xlsx")
 # Transformando os dados para o padrão brasileiro
 tabela1['Atividade - Data adicionada'] =  pd.to_datetime(tabela1['Atividade - Data adicionada'], format='%d%m%Y')
@@ -53,6 +56,9 @@ tabela1["Atividade(Tipo)-Descrição"] = tabela1["Atividade(Tipo)"]
 ########################### Lendo a primeira tabela ###########################
 
 ########################### Apresentando as metricas ###########################
+'''
+Métricas gerais para ter uma ideia de quantos clientes estão associados aos bankers e quais tem mais, menos e etc.
+'''
 m1, m2 = st.columns(2)
 all_clients = tabela1['Banker'].value_counts(ascending=True).sum()
 employee_w_most_clients = tabela1['Banker'].value_counts(ascending=True).max()
@@ -65,6 +71,12 @@ st.markdown('#')
 
 col1, col2 = st.columns(2)
 with col1:
+    ''' 
+    Aqui foi feito um grafico de barras para mostrar a quantidade de clientes de cada Banker com o intuito de demonstrar quais tem mais e etc.
+    Podendo por si só definir quais são os tipos de bankers presentes
+        1.Aqueles que ja tem uma carteira de clientes consolidada
+        2.Aqueles que estao procurando clientes para consolidas as suas carteiras
+    '''
     ########################### Grafico de barras apresentando os numeros de clientes ###########################
     st.subheader("Contagem total das atividades dos Bankers com os clientes.")
     A = tabela1.loc[tabela1['Banker'] == "employee A"]
@@ -90,6 +102,10 @@ with col1:
     ########################### Grafico de barras apresentando os numeros de clientes ###########################
     
 with col2:
+    '''
+    Grafico de pizza com o intuito de ver quais são as ativivdades (meios de comunicação) mais utilizados pelos bankers com os seus clientes.
+    Podendo filtrar por banker caso seja o desejo do usuario.
+    '''
     st.subheader("Atividade dos Bankers com os respectivos clientes:")
 
     ListaBankers_t1 = tabela1['Banker'].to_list()

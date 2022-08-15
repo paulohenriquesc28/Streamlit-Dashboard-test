@@ -36,6 +36,9 @@ st.markdown('#')
 path = os.getcwd()
 
 ########################### Lendo a segunda tabela ###########################
+'''
+Lendo a segunda tabela, organizando e transformando para certos padrões utilizados no Brasil. Facilitando a visualização para algo mais cômodo.
+'''
 tabela2 = pd.read_excel(path+r"\\PS - Base de dados 2 (correta).xlsx")
 tabela2['Data'] =  pd.to_datetime(tabela2['Data'], format='%d%b%Y')
 tabela2["Data Mês"] = tabela2['Data'].dt.to_period('M')
@@ -43,6 +46,9 @@ tabela2.sort_values(by=["Data"]).reset_index()
 ########################### Lendo a segunda tabela ###########################
 
 ########################### Apresentando as metricas ###########################
+'''
+Métricas gerais de total de credito, debito e captação total (Credito - Debito).
+'''
 metrica1, metrica2, metrica3 = st.columns(3)
 captacao_total_credito = tabela2.loc[(tabela2['Aux'] == 'C')]
 captacao_total_credito = captacao_total_credito['Captação'].sum()
@@ -63,6 +69,9 @@ metrica_selected_employee1, metrica_selected_employee2 = st.columns(2)
 
 col1, col2 = st.columns(2)
 with col1:
+    '''
+    Gráfico de linha para apresentar a evolução da captação de crédito de cada banker, no mês de Maio.
+    '''
     st.subheader("Crédito:")
 
     ListaBankers_C = tabela2['Banker'].to_list()
@@ -91,6 +100,13 @@ with col1:
     st.plotly_chart(captacao_perBanker_C_fig)
 
 with col2:
+    '''
+    Gráfico de linha para apresentar a evolução da captação de débito de cada banker, no mês de Maio.
+    Por exemplo:
+        Após uma breve analise com o dashboard foi possível concluir que o "employee C" não tem nenhum debito presente.
+        Porém ele tem uma carta de crédito.
+        Logo posso presumir que ele é um banker novo no mercado, e a sua carteira começara a apresentar lucro no futuro.
+    '''
     st.subheader("Débito:")
     ListaBankers_D = tabela2['Banker'].to_list()
     ListaBankers_D = list(dict.fromkeys(ListaBankers_D))
